@@ -17,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('/inbox/{id}', 'MessagesController@inbox');
+Route::get('/inbox/{id}/from={s_id}', 'MessagesController@chat');
+Route::post('/sent', 'MessagesController@sent');
+
