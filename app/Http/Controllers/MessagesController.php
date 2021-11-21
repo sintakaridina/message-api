@@ -73,4 +73,48 @@ class MessagesController extends Controller
         }
 
     }
+    public function reply(Request $request, $id)
+    {
+        //validate data
+        $validator = Validator::make($request->all(), [
+            'content'   => 'required',
+            'sender_id'  => 'required'
+        ],
+            [
+                'content.required' => 'Input Your Message!',
+                'sender_id.required' => 'Input username!',
+
+            ]
+        );
+        if($validator->fails()) {
+
+            return response()->json([
+                'success' => false,
+                'message' => 'User must input empty fields',
+                'data'    => $validator->errors()
+            ],400);
+
+        }else {
+
+            $message = Message::create([
+                'sender_id'  => $request->input('sender_id'),
+                'deliver_id' => $id,
+                'content'    => $request->input('content')
+            ]);
+
+
+            if ($message) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Reply message already sent!',
+                ], 200);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Failed sent your message!',
+                ], 400);
+            }
+        }
+
+    }
 }

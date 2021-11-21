@@ -20,4 +20,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/inbox/{id}', 'MessagesController@inbox');
 Route::get('/inbox/{id}/from={s_id}', 'MessagesController@chat');
 Route::post('/sent', 'MessagesController@sent');
+Route::post('/reply/{id}', 'MessagesController@reply');
 
